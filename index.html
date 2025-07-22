@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Recetas 💕</title>
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #ffeef3;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #d6336c;
+      font-family: 'Pacifico', cursive;
+      margin: 20px 0;
+      font-size: 2.2em;
+    }
+    .categoria {
+      margin: 30px 20px;
+    }
+    .categoria h2 {
+      color: #ff4d88;
+      font-family: 'Pacifico', cursive;
+      margin-bottom: 10px;
+    }
+    .recetas-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .receta-card {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 15px;
+      width: 200px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+    }
+    .receta-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .receta-card h3 {
+      font-family: 'Pacifico', cursive;
+      font-size: 18px;
+      color: #e6005c;
+    }
+    .agregar-btn {
+      background-color: #ff66a3;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .agregar-btn:hover {
+      background-color: #ff3385;
+    }
+    .detalle-receta {
+      display: none;
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .detalle-receta h2 {
+      font-family: 'Pacifico', cursive;
+      color: #c2185b;
+      font-size: 26px;
+      text-align: center;
+    }
+    ul {
+      padding-left: 0;
+      list-style: none;
+    }
+    ul li {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .volver-btn,
+    .editar-btn,
+    .eliminar-btn {
+      background-color: #ff66a3;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    .eliminar-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+    .volver-btn:hover,
+    .editar-btn:hover,
+    .eliminar-btn:hover {
+      background-color: #e6005c;
+    }
+    .formulario-container {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .formulario-container h2 {
+      font-family: 'Pacifico', cursive;
+      color: #c2185b;
+      font-size: 24px;
+      text-align: center;
+    }
+    form label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #d6336c;
+    }
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      margin-top: 5px;
+      font-family: 'Quicksand', sans-serif;
+      resize: vertical;
+    }
+    .guardar-btn,
+    .cancelar-btn {
+      margin-top: 20px;
+      margin-right: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .guardar-btn {
+      background-color: #ff66a3;
+      color: white;
+    }
+    .cancelar-btn {
+      background-color: #ccc;
+      color: #333;
+    }
+    .guardar-btn:hover {
+      background-color: #e6005c;
+    }
+    .cancelar-btn:hover {
+      background-color: #aaa;
+    }
+
+    /* Mejoras para celulares */
+    @media (max-width: 600px) {
+      .recetas-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .receta-card {
+        width: 95% !important;
+        font-size: 22px;
+        padding: 20px;
+      }
+
+      .detalle-receta,
+      .formulario-container {
+        width: 98% !important;
+        padding: 25px;
+      }
+
+      h1 {
+        font-size: 3em !important;
+        margin-bottom: 25px;
+      }
+
+      .volver-btn,
+      .editar-btn,
+      .eliminar-btn,
+      .agregar-btn {
+        font-size: 20px !important;
+        padding: 15px 25px !important;
+      }
+
+      ul li {
+        font-size: 18px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Mis Recetas Favoritas 💖</h1>
+
+  <div class="categoria">
+    <h2>🍲 Comidas</h2>
+    <div class="recetas-container" id="lista-comidas"></div>
+    <button class="agregar-btn" data-categoria="comidas">➕ Agregar receta</button>
+  </div>
+
+  <div class="categoria">
+    <h2>🍰 Postres</h2>
+    <div class="recetas-container" id="lista-postres"></div>
+    <button class="agregar-btn" data-categoria="postres">➕ Agregar receta</button>
+  </div>
+
+  <div class="categoria">
+    <h2>🍹 Bebidas</h2>
+    <div class="recetas-container" id="lista-bebidas"></div>
+    <button class="agregar-btn" data-categoria="bebidas">➕ Agregar receta</button>
+  </div>
+
+  <div class="detalle-receta" id="detalle-receta">
+    <button class="eliminar-btn" id="eliminar-receta">🗑️</button>
+    <h2 id="detalle-nombre"></h2>
+    <p><strong>⏱️ Tiempo:</strong> <span id="detalle-tiempo"></span></p>
+    <h3>Ingredientes:</h3>
+    <ul id="detalle-ingredientes"></ul>
+    <h3>Paso a paso:</h3>
+    <ul id="detalle-pasos"></ul>
+    <button class="editar-btn" id="editar-receta">📝 Editar</button>
+    <button class="volver-btn" id="volver-btn">🔙 Volver</button>
+  </div>
+
+  <div class="formulario-container" id="formulario-container" style="display: none;">
+    <h2 id="formulario-titulo">Agregar receta</h2>
+    <form id="form-receta">
+      <input type="hidden" id="form-id" />
+      <label>Nombre:</label>
+      <input type="text" id="form-nombre" required />
+      <label>Tiempo:</label>
+      <input type="text" id="form-tiempo" required />
+      <label>Ingredientes (separados por coma):</label>
+      <textarea id="form-ingredientes" required></textarea>
+      <label>Pasos (se
+      
