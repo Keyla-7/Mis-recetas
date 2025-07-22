@@ -1,0 +1,230 @@
+/* Estilos generales */
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #ffeef3;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  text-align: center;
+  color: #d6336c;
+  font-family: 'Pacifico', cursive;
+  margin: 30px 0 40px;
+  font-size: 3.5em;
+}
+.categoria {
+  margin: 40px 20px;
+}
+.categoria h2 {
+  color: #ff4d88;
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+}
+.recetas-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+.receta-card {
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 30px;
+  width: 280px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+  font-size: 24px;
+}
+.receta-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+.receta-card h3 {
+  font-family: 'Pacifico', cursive;
+  font-size: 26px;
+  color: #e6005c;
+  margin: 0;
+}
+.agregar-btn {
+  background-color: #ff66a3;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 18px 36px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 22px;
+  font-family: 'Quicksand', sans-serif;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 10px rgba(255,102,163,0.7);
+  transition: background-color 0.3s;
+}
+.agregar-btn:hover {
+  background-color: #ff3385;
+}
+.detalle-receta {
+  display: none;
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 40px;
+  margin: 40px auto;
+  max-width: 700px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  position: relative;
+  font-size: 22px;
+}
+.detalle-receta h2 {
+  font-family: 'Pacifico', cursive;
+  color: #c2185b;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+ul {
+  padding-left: 0;
+  list-style: none;
+  font-size: 20px;
+}
+ul li {
+  margin-bottom: 12px;
+}
+.volver-btn,
+.editar-btn,
+.eliminar-btn {
+  background-color: #ff66a3;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-right: 15px;
+  transition: background-color 0.3s;
+}
+.eliminar-btn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  padding: 10px 16px;
+  font-size: 18px;
+  box-shadow: 0 4px 10px rgba(230,0,92,0.7);
+}
+.volver-btn:hover,
+.editar-btn:hover,
+.eliminar-btn:hover {
+  background-color: #e6005c;
+  box-shadow: 0 6px 14px rgba(230,0,92,0.8);
+}
+.formulario-container {
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 40px;
+  margin: 40px auto;
+  max-width: 600px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  font-size: 22px;
+}
+.formulario-container h2 {
+  font-family: 'Pacifico', cursive;
+  color: #c2185b;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+form label {
+  display: block;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #d6336c;
+  font-size: 20px;
+}
+form input[type="text"],
+form textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  margin-top: 8px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  resize: vertical;
+}
+.guardar-btn,
+.cancelar-btn {
+  margin-top: 30px;
+  margin-right: 15px;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 22px;
+  transition: background-color 0.3s;
+}
+.guardar-btn {
+  background-color: #ff66a3;
+  color: white;
+  box-shadow: 0 6px 18px rgba(255,102,163,0.8);
+}
+.cancelar-btn {
+  background-color: #ccc;
+  color: #333;
+}
+.guardar-btn:hover {
+  background-color: #e6005c;
+  box-shadow: 0 8px 22px rgba(230,0,92,0.9);
+}
+.cancelar-btn:hover {
+  background-color: #aaa;
+}
+
+/* Responsivo para celulares: */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 4.5em;
+    margin-bottom: 50px;
+  }
+  .categoria {
+    margin: 50px 15px;
+  }
+  .categoria h2 {
+    font-size: 3em;
+    margin-bottom: 25px;
+  }
+  .recetas-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .receta-card {
+    width: 95% !important;
+    font-size: 28px !important;
+    padding: 40px !important;
+  }
+  .receta-card h3 {
+    font-size: 30px !important;
+  }
+  .detalle-receta,
+  .formulario-container {
+    width: 98% !important;
+    padding: 50px !important;
+    font-size: 26px !important;
+  }
+  ul li {
+    font-size: 24px !important;
+    margin-bottom: 18px;
+  }
+  .volver-btn,
+  .editar-btn,
+  .eliminar-btn,
+  .agregar-btn {
+    font-size: 28px !important;
+    padding: 25px 40px !important;
+  }
+  }
