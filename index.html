@@ -190,7 +190,7 @@
   </style>
 </head>
 <body>
-  <h1>Mis Recetas Favoritas 💖</h1>
+  <h1>🎀Mis Recetas🎀 </h1>
 
   <div class="categoria">
     <h2>🍲 Comidas</h2>
@@ -231,9 +231,9 @@
       <label>Tiempo:</label>
       <input type="text" id="form-tiempo" required />
       <label>Ingredientes (separados por coma):</label>
-      <textarea id="form-ingredientes" required></textarea>
+      <textarea id="form-ingredientes" ></textarea>
       <label>Pasos (separados por punto y coma):</label>
-      <textarea id="form-pasos" required></textarea>
+      <textarea id="form-pasos" ></textarea>
       <input type="hidden" id="form-categoria" />
       <button type="submit" class="guardar-btn">💾 Guardar</button>
       <button type="button" class="cancelar-btn" id="cancelar-btn">❌ Cancelar</button>
@@ -317,7 +317,7 @@
       ulIng.innerHTML = "";
       receta.ingredientes.forEach(i => {
         const li = document.createElement("li");
-        li.textContent = "🍓 " + i;
+        li.textContent = "🥣 " + i;
         ulIng.appendChild(li);
       });
 
