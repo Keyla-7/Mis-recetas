@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mis Recetas 💕</title>
   <style>
+    /* --- Pega acá todo el CSS que te pasé antes --- */
     body {
       font-family: 'Quicksand', sans-serif;
       background-color: #ffeef3;
@@ -169,41 +170,21 @@
     .cancelar-btn:hover {
       background-color: #aaa;
     }
-
-    /* Mejoras para celulares */
     @media (max-width: 600px) {
       .recetas-container {
         flex-direction: column;
         align-items: center;
       }
-
       .receta-card {
-        width: 95% !important;
-        font-size: 22px;
-        padding: 20px;
+        width: 90%;
       }
-
       .detalle-receta,
       .formulario-container {
-        width: 98% !important;
-        padding: 25px;
+        width: 90%;
       }
-
-      h1 {
-        font-size: 3em !important;
-        margin-bottom: 25px;
-      }
-
-      .volver-btn,
-      .editar-btn,
-      .eliminar-btn,
-      .agregar-btn {
-        font-size: 20px !important;
-        padding: 15px 25px !important;
-      }
-
-      ul li {
-        font-size: 18px !important;
+      .eliminar-btn {
+        top: 10px;
+        right: 10px;
       }
     }
   </style>
@@ -251,5 +232,188 @@
       <input type="text" id="form-tiempo" required />
       <label>Ingredientes (separados por coma):</label>
       <textarea id="form-ingredientes" required></textarea>
-      <label>Pasos (se
-      
+      <label>Pasos (separados por punto y coma):</label>
+      <textarea id="form-pasos" required></textarea>
+      <input type="hidden" id="form-categoria" />
+      <button type="submit" class="guardar-btn">💾 Guardar</button>
+      <button type="button" class="cancelar-btn" id="cancelar-btn">❌ Cancelar</button>
+    </form>
+  </div>
+
+  <script>
+    // JS que controla toda la app (igual que te pasé antes pero inline para prueba)
+
+    let recetas = JSON.parse(localStorage.getItem("recetas")) || [
+      {
+        id: crypto.randomUUID(),
+        nombre: "Tarta de Frutilla 🍓",
+        categoria: "postres",
+        tiempo: "30 min",
+        ingredientes: ["1 masa de tarta", "250g frutillas", "Crema pastelera", "Azúcar"],
+        pasos: [
+          "Hornear la masa sola durante 10 min.",
+          "Rellenar con crema pastelera.",
+          "Colocar frutillas cortadas encima.",
+          "Espolvorear con azúcar y enfriar."
+        ]
+      },
+      {
+        id: crypto.randomUUID(),
+        nombre: "Sándwich de Atún 🥪",
+        categoria: "comidas",
+        tiempo: "10 min",
+        ingredientes: ["2 rebanadas de pan", "1 lata de atún", "Mayonesa", "Lechuga"],
+        pasos: [
+          "Mezclar el atún con mayonesa.",
+          "Untar sobre una rebanada de pan.",
+          "Agregar lechuga y cerrar.",
+          "Cortar en triángulos y servir."
+        ]
+      },
+      {
+        id: crypto.randomUUID(),
+        nombre: "Limonada fresca 🍋",
+        categoria: "bebidas",
+        tiempo: "5 min",
+        ingredientes: ["3 limones", "1 litro de agua", "Azúcar al gusto", "Hielo"],
+        pasos: [
+          "Exprimir los limones.",
+          "Mezclar con el agua y azúcar.",
+          "Agregar hielo y servir bien fría."
+        ]
+      }
+    ];
+
+    let recetaActual = null;
+
+    function guardarLocal() {
+      localStorage.setItem("recetas", JSON.stringify(recetas));
+    }
+
+    function mostrarRecetas() {
+      ["comidas", "postres", "bebidas"].forEach(cat => {
+        const contenedor = document.getElementById("lista-" + cat);
+        contenedor.innerHTML = "";
+      });
+
+      recetas.forEach(receta => {
+        const contenedor = document.getElementById("lista-" + receta.categoria);
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "receta-card";
+        tarjeta.innerHTML = `<h3>${receta.nombre}</h3>`;
+        tarjeta.addEventListener("click", () => verReceta(receta.id));
+        contenedor.appendChild(tarjeta);
+      });
+    }
+
+    function verReceta(id) {
+      const receta = recetas.find(r => r.id === id);
+      recetaActual = receta;
+
+      document.getElementById("detalle-nombre").textContent = receta.nombre;
+      document.getElementById("detalle-tiempo").textContent = receta.tiempo;
+
+      const ulIng = document.getElementById("detalle-ingredientes");
+      ulIng.innerHTML = "";
+      receta.ingredientes.forEach(i => {
+        const li = document.createElement("li");
+        li.textContent = "🍓 " + i;
+        ulIng.appendChild(li);
+      });
+
+      const ulPasos = document.getElementById("detalle-pasos");
+      ulPasos.innerHTML = "";
+      receta.pasos.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = "📝 " + p;
+        ulPasos.appendChild(li);
+      });
+
+      document.getElementById("detalle-receta").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function cerrarDetalle() {
+      document.getElementById("detalle-receta").style.display = "none";
+      recetaActual = null;
+    }
+
+    function abrirFormulario(categoria) {
+      document.getElementById("formulario-container").style.display = "block";
+      document.getElementById("form-categoria").value = categoria;
+      document.getElementById("form-id").value = "";
+      document.getElementById("form-nombre").value = "";
+      document.getElementById("form-tiempo").value = "";
+      document.getElementById("form-ingredientes").value = "";
+      document.getElementById("form-pasos").value = "";
+      document.getElementById("formulario-titulo").textContent = "Agregar receta";
+    }
+
+    function cerrarFormulario() {
+      document.getElementById("formulario-container").style.display = "none";
+    }
+
+    function guardarReceta(event) {
+      event.preventDefault();
+
+      const id = document.getElementById("form-id").value || crypto.randomUUID();
+      const nuevaReceta = {
+        id,
+        nombre: document.getElementById("form-nombre").value.trim(),
+        categoria: document.getElementById("form-categoria").value,
+        tiempo: document.getElementById("form-tiempo").value.trim(),
+        ingredientes: document.getElementById("form-ingredientes").value.split(",").map(i => i.trim()).filter(i => i),
+        pasos: document.getElementById("form-pasos").value.split(";").map(p => p.trim()).filter(p => p)
+      };
+
+      const index = recetas.findIndex(r => r.id === id);
+      if (index >= 0) {
+        recetas[index] = nuevaReceta;
+      } else {
+        recetas.push(nuevaReceta);
+      }
+
+      guardarLocal();
+      mostrarRecetas();
+      cerrarFormulario();
+    }
+
+    function eliminarReceta() {
+      if (!recetaActual) return;
+      if (confirm("¿Seguro que querés borrar esta receta?")) {
+        recetas = recetas.filter(r => r.id !== recetaActual.id);
+        guardarLocal();
+        cerrarDetalle();
+        mostrarRecetas();
+      }
+    }
+
+    function editarReceta() {
+      if (!recetaActual) return;
+      abrirFormulario(recetaActual.categoria);
+      document.getElementById("formulario-titulo").textContent = "Editar receta";
+      document.getElementById("form-id").value = recetaActual.id;
+      document.getElementById("form-nombre").value = recetaActual.nombre;
+      document.getElementById("form-tiempo").value = recetaActual.tiempo;
+      document.getElementById("form-ingredientes").value = recetaActual.ingredientes.join(", ");
+      document.getElementById("form-pasos").value = recetaActual.pasos.join("; ");
+    }
+
+    document.querySelectorAll(".agregar-btn").forEach(btn =>
+      btn.addEventListener("click", () => abrirFormulario(btn.dataset.categoria))
+    );
+
+    document.getElementById("eliminar-receta").addEventListener("click", eliminarReceta);
+
+    document.getElementById("editar-receta").addEventListener("click", editarReceta);
+
+    document.getElementById("form-receta").addEventListener("submit", guardarReceta);
+
+    document.getElementById("cancelar-btn").addEventListener("click", cerrarFormulario);
+
+    document.getElementById("volver-btn").addEventListener("click", cerrarDetalle);
+
+    mostrarRecetas();
+  </script>
+</body>
+</html>
